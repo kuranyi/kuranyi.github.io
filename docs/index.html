@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kevin Uranyi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --neon-pink:    #ff2d87;
+      --neon-cyan:    #00f5ff;
+      --neon-purple:  #bf5fff;
+      --neon-yellow:  #ffe600;
+      --neon-green:   #00e676;
+      --bg-dark:      #07060f;
+      --bg-card:      rgba(255, 255, 255, 0.03);
+      --border-glow:  rgba(191, 95, 255, 0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #e0d6ff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Grid horizon background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(to bottom, transparent 55%, var(--bg-dark) 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(191, 95, 255, 0.12) 80px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 79px,
+          rgba(191, 95, 255, 0.12) 80px
+        );
+      background-size: 100% 100%, 80px 80px, 80px 80px;
+      pointer-events: none;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.06) 0px,
+        rgba(0,0,0,0.06) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 0 3rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .hero-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.4rem, 8vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 50%, var(--neon-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 18px rgba(255, 45, 135, 0.5));
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(224, 214, 255, 0.75);
+      letter-spacing: 0.08em;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-pink), var(--neon-cyan), transparent);
+      margin: 2rem auto;
+      box-shadow: 0 0 8px var(--neon-pink);
+    }
+
+    /* ── Section headings ── */
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 4px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+    }
+
+    .card:hover {
+      border-color: rgba(191, 95, 255, 0.7);
+      box-shadow: 0 0 24px rgba(191, 95, 255, 0.15), inset 0 0 24px rgba(191, 95, 255, 0.03);
+    }
+
+    /* ── About ── */
+    .about-text {
+      line-height: 1.8;
+      color: rgba(224, 214, 255, 0.88);
+    }
+
+    .about-text p + p { margin-top: 1rem; }
+
+    .highlight {
+      color: var(--neon-cyan);
+      font-weight: 600;
+    }
+
+    /* ── Role pills ── */
+    .roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .role-pill {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .role-pill.pink   { color: var(--neon-pink);   border-color: var(--neon-pink);   text-shadow: 0 0 8px var(--neon-pink);   box-shadow: inset 0 0 8px rgba(255,45,135,0.08); }
+    .role-pill.cyan   { color: var(--neon-cyan);   border-color: var(--neon-cyan);   text-shadow: 0 0 8px var(--neon-cyan);   box-shadow: inset 0 0 8px rgba(0,245,255,0.08); }
+    .role-pill.purple { color: var(--neon-purple); border-color: var(--neon-purple); text-shadow: 0 0 8px var(--neon-purple); box-shadow: inset 0 0 8px rgba(191,95,255,0.08); }
+
+    /* ── Links grid ── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.4rem;
+      border: 1px solid var(--border-glow);
+      border-radius: 4px;
+      background: var(--bg-card);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,45,135,0.05), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(255, 45, 135, 0.2);
+    }
+
+    .link-card:hover::after { opacity: 1; }
+
+    .link-card.cyan:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+
+    .link-card.purple:hover {
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 20px rgba(191, 95, 255, 0.2);
+    }
+
+    .link-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .link-info { min-width: 0; }
+
+    .link-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--neon-pink);
+      text-shadow: 0 0 8px var(--neon-pink);
+      margin-bottom: 0.2rem;
+    }
+
+    .link-card.cyan  .link-title { color: var(--neon-cyan);   text-shadow: 0 0 8px var(--neon-cyan); }
+    .link-card.purple .link-title { color: var(--neon-purple); text-shadow: 0 0 8px var(--neon-purple); }
+
+    .link-desc {
+      font-size: 0.85rem;
+      color: rgba(224, 214, 255, 0.65);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── CliniVibes feature card ── */
+    .feature-card {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 28px rgba(0, 245, 255, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .feature-body {}
+
+    .feature-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 12px var(--neon-cyan);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      line-height: 1.7;
+      color: rgba(224, 214, 255, 0.8);
+      font-size: 1rem;
+    }
+
+    .feature-cta {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+    }
+
+    .feature-cta::after {
+      content: ' →';
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding-top: 3rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: rgba(191, 95, 255, 0.4);
+      text-transform: uppercase;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 560px) {
+      .feature-card { flex-direction: column; gap: 0.75rem; }
+      .card { padding: 1.25rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Hero -->
+    <header class="hero">
+      <p class="hero-subtitle">kevinuranyi.com</p>
+      <h1 class="hero-name">Kevin Uranyi</h1>
+      <p class="hero-tagline">Product Manager &bull; Registered Nurse &bull; Public Safety</p>
+      <div class="hero-divider"></div>
+    </header>
+
+    <!-- About -->
+    <section>
+      <p class="section-title">// About</p>
+      <div class="card">
+        <div class="about-text">
+          <p>
+            Kevin is a <span class="highlight">product manager</span> with an unconventional path built on
+            responding to emergencies, caring for patients, and now building software that makes a difference
+            in healthcare.
+          </p>
+          <p>
+            With a career that started in <span class="highlight">public safety</span>, spanning 911 operator
+            and firefighter/EMT&mdash;that foundation gave him a front-row seat to high-stakes decision-making
+            and the gaps that exist when systems don't talk to each other.
+          </p>
+          <p>
+            Transitioning into nursing as a <span class="highlight">PICU and ER nurse</span>, then hitting
+            the road as a <span class="highlight">travel nurse during the COVID-19 pandemic</span>, moving
+            between hospital systems across the country and seeing firsthand where clinical workflows break
+            down under pressure.
+          </p>
+          <p>
+            Now all of that is channeled into <span class="highlight">product</span>, building
+            <span class="highlight">AI-powered tools</span> that solve real problems for the clinicians and
+            patients he used to work alongside. Kevin believes AI, applied thoughtfully to healthcare, can
+            close the gaps he's witnessed firsthand.
+          </p>
+        </div>
+        <div class="roles">
+          <span class="role-pill purple">Product Manager</span>
+          <span class="role-pill cyan">Registered Nurse</span>
+          <span class="role-pill pink">Public Safety</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section style="margin-top: 2.5rem;">
+      <p class="section-title">// Projects</p>
+      <a class="card feature-card" href="https://www.clinivibes.com" target="_blank" rel="noopener" style="margin-bottom: 1rem;">
+        <span class="feature-icon">🏥</span>
+        <div class="feature-body">
+          <p class="feature-name">CliniVibes</p>
+          <p class="feature-desc">Hospital reviews for nurses, by nurses. Honest, firsthand takes on staffing, culture, and everything else you need to know before you sign the contract.</p>
+          <span class="feature-cta">Visit CliniVibes</span>
+        </div>
+      </a>
+      <a class="card feature-card" href="https://www.revampedev.com" target="_blank" rel="noopener" style="border-color: rgba(0,230,118,0.3);">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-body">
+          <p class="feature-name" style="color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green);">REVAMPED EV</p>
+          <p class="feature-desc">EV conversions for classic cars&mdash;the incubator behind the electric 1963 'Voltswagen' Beetle. Built to shock, tuned to thrill.</p>
+          <span class="feature-cta" style="color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green);">Visit REVAMPED EV</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- Links -->
+    <section style="margin-top: 2.5rem;">
+      <p class="section-title">// Connect</p>
+      <div class="links-grid">
+        <a class="link-card" href="https://github.com/kuranyi" target="_blank" rel="noopener">
+          <span class="link-icon">⌨</span>
+          <div class="link-info">
+            <p class="link-title">GitHub</p>
+            <p class="link-desc">github.com/kuranyi</p>
+          </div>
+        </a>
+        <a class="link-card cyan" href="https://www.linkedin.com/in/kevinuranyi/" target="_blank" rel="noopener">
+          <span class="link-icon">◈</span>
+          <div class="link-info">
+            <p class="link-title">LinkedIn</p>
+            <p class="link-desc">in/kevinuranyi</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2026 Kevin Uranyi &bull; kevinuranyi.com
+    </footer>
+
+  </div>
+</body>
+</html>
